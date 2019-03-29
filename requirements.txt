@@ -1,0 +1,3 @@
+python-dateutil
+pyqt5
+sqlalchemy

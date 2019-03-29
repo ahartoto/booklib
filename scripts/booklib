@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import os
+import sys
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
+from booklib import main
+
+if __name__ == '__main__':
+    sys.exit(main.main())

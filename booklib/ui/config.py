@@ -1,0 +1,61 @@
+
+LABELS = {
+    'en': {
+        'AdminWindow': {
+            'title': 'Admin Panel',
+            'add_account_btn': 'Add Account',
+            'add_book_btn': 'Add Book',
+        },
+        'AddAccountWindow': {
+            'title': 'Add Account',
+            'first_name_txt': 'First Name',
+            'family_name_txt': 'Family Name',
+            'dob_txt': 'Date of birth',
+            'gov_id_txt': 'Government ID',
+            'phone_number_txt': 'Phone #',
+            'school_txt': 'School Name',
+            'class_level_txt': 'Class/Level',
+            'ok_btn': 'OK',
+            'cancel_btn': 'Cancel',
+        },
+        'AddBookWindow': {
+            'title': 'Add Book',
+            'isbn_no_txt': 'ISBN Number',
+            'call_no_txt': 'Call Number',
+            'category_txt': 'Categories',
+            'level_txt': 'Level',
+            'title_txt': 'Title',
+            'ok_btn': 'OK',
+            'cancel_btn': 'Cancel',
+        },
+    },
+    'fr': {
+        'AdminWindow': {
+            'title': 'panneau administrateur',
+            'add_account_btn': 'ajouter un compte',
+            'add_book_btn': 'Add Book',
+        },
+        'AddAccountWindow': {
+            'title': 'Add Account',
+            'first_name_txt': 'First Name',
+            'family_name_txt': 'Family Name',
+            'dob_txt': 'Date of birth',
+            'gov_id_txt': 'Government ID',
+            'phone_number_txt': 'Phone #',
+            'school_txt': 'School Name',
+            'class_level_txt': 'Class/Level',
+            'ok_btn': 'OK',
+            'cancel_btn': 'Cancel',
+        },
+        'AddBookWindow': {
+            'title': 'Add Book',
+            'isbn_no_txt': 'ISBN Number',
+            'call_no_txt': 'Call Number',
+            'category_txt': 'Categories',
+            'level_txt': 'Level',
+            'title_txt': 'Title',
+            'ok_btn': 'OK',
+            'cancel_btn': 'Cancel',
+        },
+    },
+}
