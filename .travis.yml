@@ -12,8 +12,8 @@ matrix:
 install:
 - pip install --upgrade -r requirements.txt
 - pip install --upgrade -r requirements-dev.txt
-#script:
-#- pylint booklib
+script:
+- echo pylint booklib
 #- pip install -e . && python -m pytest tests
 
 notifications:
