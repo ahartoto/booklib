@@ -22,7 +22,7 @@ setup(
     description='Turn your book collection to a library.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    packages=find_packages(),
+    packages=find_packages(exclude=('tests', 'tests.*')),
     install_requires=[
         'PyQT5>=5.12.1',
         'python-dateutil>=2.8.0',

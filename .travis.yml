@@ -13,8 +13,8 @@ install:
 - pip install --upgrade -r requirements.txt
 - pip install --upgrade -r requirements-dev.txt
 script:
-- echo pylint booklib
-#- pip install -e . && python -m pytest tests
+#- pylint booklib
+- pip install -e . && python -m pytest tests
 
 notifications:
   slack: curious-minds-101:Wkf5gPKQyJalUZ99Oyql0Zav

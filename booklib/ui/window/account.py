@@ -1,7 +1,7 @@
 # Filename: booklib/ui/window/account.py
 
 """
-UI Window for adding a new account.
+UI Window for managing accounts.
 """
 
 # PyQt5
@@ -12,15 +12,15 @@ import PyQt5.QtWidgets as qtw
 from booklib.ui.config import LABELS
 
 
-class AddAccountWindow(qtw.QMainWindow):
-    def __init__(self, admin_window, *args, **kwargs):
+class AccountWindow(qtw.QDialog):
+    def __init__(self, admin_window, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.label_root = __class__.__name__
         self.admin_window = admin_window
 
         self.init_ui()
 
-    def init_ui(self):
+    def init_ui(self) -> None:
         lang = self.admin_window.cfg.language
         labels = LABELS[lang][self.label_root]
 
@@ -49,61 +49,32 @@ class AddAccountWindow(qtw.QMainWindow):
         level = qtw.QLabel(labels['class_level_txt'])
         level_edit = qtw.QLineEdit()
 
-        grid = qtw.QGridLayout()
+        # Create form.
+        form_layout = qtw.QFormLayout()
+        form_layout.addRow(first_name, first_name_edit)
+        form_layout.addRow(family_name, family_name_edit)
+        form_layout.addRow(dob, dob_edit)
+        form_layout.addRow(gov_id, gov_id_edit)
+        form_layout.addRow(phone_no, phone_no_edit)
+        form_layout.addRow(school, school_edit)
+        form_layout.addRow(level, level_edit)
 
-        # Ensure labels are aligned
-        grid.setSpacing(10)
+        # Add confirmation buttons at the bottom.
+        button_box = qtw.QDialogButtonBox()
+        button_box.addButton(labels['ok_btn'], qtw.QDialogButtonBox.AcceptRole)
+        button_box.addButton(labels['cancel_btn'],
+                             qtw.QDialogButtonBox.RejectRole)
+        button_box.accepted.connect(self.insert_account)
+        button_box.rejected.connect(self.show_admin_window)
 
-        i = 1
-        grid.addWidget(first_name, i, 0)
-        grid.addWidget(first_name_edit, i, 1)
-        i += 1
+        form_group_box = qtw.QGroupBox(labels['new_account_form'])
+        form_group_box.setLayout(form_layout)
 
-        grid.addWidget(family_name, i, 0)
-        grid.addWidget(family_name_edit, i, 1)
-        i += 1
+        main_layout = qtw.QVBoxLayout()
+        main_layout.addWidget(form_group_box)
+        main_layout.addWidget(button_box)
 
-        grid.addWidget(dob, i, 0)
-        grid.addWidget(dob_edit, i, 1)
-        i += 1
-
-        grid.addWidget(gov_id, i, 0)
-        grid.addWidget(gov_id_edit, i, 1)
-        i += 1
-
-        grid.addWidget(phone_no, i, 0)
-        grid.addWidget(phone_no_edit, i, 1)
-        i += 1
-
-        grid.addWidget(school, i, 0)
-        grid.addWidget(school_edit, i, 1)
-        i += 1
-
-        grid.addWidget(level, i, 0)
-        grid.addWidget(level_edit, i, 1)
-        i += 1
-
-        # Add buttons at the bottom
-        ok_btn = qtw.QPushButton(labels['ok_btn'])
-        ok_btn.clicked.connect(self.insert_account)
-
-        cancel_btn = qtw.QPushButton(labels['cancel_btn'])
-        cancel_btn.clicked.connect(self.show_admin_window)
-
-        hbox = qtw.QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(ok_btn)
-        hbox.addWidget(cancel_btn)
-
-        confirm_widget = qtw.QWidget()
-        confirm_widget.setLayout(hbox)
-        grid.addWidget(confirm_widget, i, 1)
-        i += 1
-
-        # Central widget
-        central_widget = qtw.QWidget()
-        central_widget.setLayout(grid)
-        self.setCentralWidget(central_widget)
+        self.setLayout(main_layout)
 
         # Set window title
         self.setWindowTitle(labels['title'])
@@ -122,7 +93,7 @@ class AddAccountWindow(qtw.QMainWindow):
 
         self.show()
 
-    def show_admin_window(self):
+    def show_admin_window(self) -> None:
         self.hide()
         self.admin_window.show()
 

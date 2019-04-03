@@ -1,7 +1,7 @@
 # Filename: booklib/ui/window/book.py
 
 """
-UI Window for cataloging book.
+UI Window for managing books.
 """
 
 # PyQt5
@@ -11,7 +11,7 @@ import PyQt5.QtWidgets as qtw
 from booklib.ui.config import LABELS
 
 
-class AddBookWindow(qtw.QMainWindow):
+class BookWindow(qtw.QDialog):
     def __init__(self, admin_window, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_root = __class__.__name__
@@ -29,41 +29,27 @@ class AddBookWindow(qtw.QMainWindow):
         isbn_no_edit = qtw.QLineEdit()
         call_no_edit = qtw.QLineEdit()
 
-        grid = qtw.QGridLayout()
+        # Create forms.
+        form_layout = qtw.QFormLayout()
+        form_layout.addRow(isbn_no, isbn_no_edit)
+        form_layout.addRow(call_no, call_no_edit)
 
-        # Ensure labels are aligned
-        grid.setSpacing(10)
+        # Add confirmation buttons at the bottom.
+        button_box = qtw.QDialogButtonBox()
+        button_box.addButton(labels['ok_btn'], qtw.QDialogButtonBox.AcceptRole)
+        button_box.addButton(labels['cancel_btn'],
+                             qtw.QDialogButtonBox.RejectRole)
+        button_box.accepted.connect(self.insert_book)
+        button_box.rejected.connect(self.show_admin_window)
 
-        i = 1
-        grid.addWidget(isbn_no, i, 0)
-        grid.addWidget(isbn_no_edit, i, 1)
-        i += 1
+        form_group_box = qtw.QGroupBox()
+        form_group_box.setLayout(form_layout)
 
-        grid.addWidget(call_no, i, 0)
-        grid.addWidget(call_no_edit, i, 1)
-        i += 1
+        main_layout = qtw.QVBoxLayout()
+        main_layout.addWidget(form_group_box)
+        main_layout.addWidget(button_box)
 
-        # Add buttons at the bottom
-        ok_btn = qtw.QPushButton(labels['ok_btn'])
-        ok_btn.clicked.connect(self.insert_book)
-
-        cancel_btn = qtw.QPushButton(labels['cancel_btn'])
-        cancel_btn.clicked.connect(self.show_admin_window)
-
-        hbox = qtw.QHBoxLayout()
-        hbox.addStretch(1)
-        hbox.addWidget(ok_btn)
-        hbox.addWidget(cancel_btn)
-
-        confirm_widget = qtw.QWidget()
-        confirm_widget.setLayout(hbox)
-        grid.addWidget(confirm_widget, i, 1)
-        i += 1
-
-        # Central widget
-        central_widget = qtw.QWidget()
-        central_widget.setLayout(grid)
-        self.setCentralWidget(central_widget)
+        self.setLayout(main_layout)
 
         # Set window title
         self.setWindowTitle(labels['title'])

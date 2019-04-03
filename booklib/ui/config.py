@@ -3,11 +3,13 @@ LABELS = {
     'en': {
         'AdminWindow': {
             'title': 'Admin Panel',
-            'add_account_btn': 'Add Account',
-            'add_book_btn': 'Add Book',
+            'account_btn': 'Account',
+            'book_btn': 'Book',
+            'search_btn': 'Search',
         },
-        'AddAccountWindow': {
-            'title': 'Add Account',
+        'AccountWindow': {
+            'title': 'Account',
+            'new_account_form': 'New Account',
             'first_name_txt': 'First Name',
             'family_name_txt': 'Family Name',
             'dob_txt': 'Date of birth',
@@ -18,8 +20,8 @@ LABELS = {
             'ok_btn': 'OK',
             'cancel_btn': 'Cancel',
         },
-        'AddBookWindow': {
-            'title': 'Add Book',
+        'BookWindow': {
+            'title': 'Book',
             'isbn_no_txt': 'ISBN Number',
             'call_no_txt': 'Call Number',
             'category_txt': 'Categories',
@@ -32,11 +34,13 @@ LABELS = {
     'fr': {
         'AdminWindow': {
             'title': 'panneau administrateur',
-            'add_account_btn': 'ajouter un compte',
-            'add_book_btn': 'Add Book',
+            'account_btn': 'ajouter un compte',
+            'book_btn': 'Book',
+            'search_btn': 'Search',
         },
-        'AddAccountWindow': {
-            'title': 'Add Account',
+        'AccountWindow': {
+            'title': 'Account',
+            'new_account_form': 'New Account',
             'first_name_txt': 'First Name',
             'family_name_txt': 'Family Name',
             'dob_txt': 'Date of birth',
@@ -47,8 +51,8 @@ LABELS = {
             'ok_btn': 'OK',
             'cancel_btn': 'Cancel',
         },
-        'AddBookWindow': {
-            'title': 'Add Book',
+        'BookWindow': {
+            'title': 'Book',
             'isbn_no_txt': 'ISBN Number',
             'call_no_txt': 'Call Number',
             'category_txt': 'Categories',
