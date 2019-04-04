@@ -1,4 +1,5 @@
 coverage
 pylint
+pyqt5-stubs
 pytest
 pytype

@@ -10,12 +10,51 @@ import PyQt5.QtWidgets as qtw
 # BookLib
 from booklib.ui.config import LABELS
 
+# BookLib
+from booklib.models import BookCategoryEnum
+
+
+class BookInfo:
+
+    def __init__(self):
+        self.isbn_no_qt = qtw.QLineEdit()
+        self.call_no_qt = qtw.QLineEdit()
+
+        self.categories_children_qt = qtw.QCheckBox(
+            BookCategoryEnum.children.name)
+        self.categories_adult_qt = qtw.QCheckBox(BookCategoryEnum.adult.name)
+        self.categories_young_adult_qt = qtw.QCheckBox(
+            BookCategoryEnum.young_adult.name)
+        self.categories_teen_qt = qtw.QCheckBox(BookCategoryEnum.teen.name)
+        self.categories_animals_qt = qtw.QCheckBox(
+            BookCategoryEnum.animals.name)
+        self.categories_nature_qt = qtw.QCheckBox(BookCategoryEnum.nature.name)
+        self.categories_religious_qt = qtw.QCheckBox(
+            BookCategoryEnum.religious.name)
+        self.categories_comic_qt = qtw.QCheckBox(BookCategoryEnum.comic.name)
+        self.categories_others_qt = qtw.QCheckBox(BookCategoryEnum.others.name)
+
+        self.categories_box_qt = qtw.QGroupBox()
+        categories_layout = qtw.QGridLayout()
+        categories_layout.addWidget(self.categories_children_qt, 1, 0)
+        categories_layout.addWidget(self.categories_adult_qt, 1, 1)
+        categories_layout.addWidget(self.categories_young_adult_qt, 2, 0)
+        categories_layout.addWidget(self.categories_teen_qt, 2, 1)
+        categories_layout.addWidget(self.categories_animals_qt, 3, 0)
+        categories_layout.addWidget(self.categories_nature_qt, 3, 1)
+        categories_layout.addWidget(self.categories_religious_qt, 4, 0)
+        categories_layout.addWidget(self.categories_comic_qt, 4, 1)
+        categories_layout.addWidget(self.categories_others_qt, 5, 0)
+        self.categories_box_qt.setLayout(categories_layout)
+
 
 class BookWindow(qtw.QDialog):
     def __init__(self, admin_window, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.label_root = __class__.__name__
         self.admin_window = admin_window
+
+        self.book = BookInfo()
 
         self.init_ui()
 
@@ -25,14 +64,13 @@ class BookWindow(qtw.QDialog):
 
         isbn_no = qtw.QLabel(labels['isbn_no_txt'])
         call_no = qtw.QLabel(labels['call_no_txt'])
-
-        isbn_no_edit = qtw.QLineEdit()
-        call_no_edit = qtw.QLineEdit()
+        categories = qtw.QLabel(labels['category_txt'])
 
         # Create forms.
         form_layout = qtw.QFormLayout()
-        form_layout.addRow(isbn_no, isbn_no_edit)
-        form_layout.addRow(call_no, call_no_edit)
+        form_layout.addRow(isbn_no, self.book.isbn_no_qt)
+        form_layout.addRow(call_no, self.book.call_no_qt)
+        form_layout.addRow(categories, self.book.categories_box_qt)
 
         # Add confirmation buttons at the bottom.
         button_box = qtw.QDialogButtonBox()
