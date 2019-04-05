@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/ahartoto/booklib.svg?branch=master)](https://travis-ci.com/ahartoto/booklib)
 
 # BookLib
 
