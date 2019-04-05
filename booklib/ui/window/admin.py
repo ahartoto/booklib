@@ -5,11 +5,13 @@ Main UI Window.
 """
 
 # Standard libraries
+import typing
 
 # PyQt5
 import PyQt5.QtWidgets as qtw
 
 # BookLib
+from booklib import config
 from booklib.ui.config import LABELS
 from booklib.ui.window.account import AccountWindow
 from booklib.ui.window.book import BookWindow
@@ -20,15 +22,17 @@ class AdminWindow(qtw.QMainWindow):
     Main admin window.
     """
 
-    def __init__(self, cfg, *args, **kwargs):
+    def __init__(self, cfg: config.MenuConfig, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.cfg = cfg
         self.label_root = __class__.__name__
 
         # Account window
+        self.account_btn = None
         self.account_window = None
 
         # Book window
+        self.book_btn = None
         self.book_window = None
 
         self.init_ui()
@@ -54,16 +58,16 @@ class AdminWindow(qtw.QMainWindow):
         grid = qtw.QGridLayout()
         vbox_side_menu = qtw.QVBoxLayout()
         # Add account button
-        account_btn = qtw.QPushButton(labels['account_btn'], self)
-        account_btn.clicked.connect(self.show_account_window)
+        self.account_btn = qtw.QPushButton(labels['account_btn'], self)
+        self.account_btn.clicked.connect(self.show_account_window)
         # grid.addWidget(account_btn, 1, 0)
-        vbox_side_menu.addWidget(account_btn)
+        vbox_side_menu.addWidget(self.account_btn)
 
         # Add book button
-        book_btn = qtw.QPushButton(labels['book_btn'], self)
-        book_btn.clicked.connect(self.show_book_window)
+        self.book_btn = qtw.QPushButton(labels['book_btn'], self)
+        self.book_btn.clicked.connect(self.show_book_window)
         # grid.addWidget(book_btn, 2, 0)
-        vbox_side_menu.addWidget(book_btn)
+        vbox_side_menu.addWidget(self.book_btn)
 
         # Add search menu: text bar + button
         hbox_search_menu = qtw.QHBoxLayout()

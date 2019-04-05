@@ -2,4 +2,6 @@ coverage
 pylint
 pyqt5-stubs
 pytest
+pytest-qt
+pytest-xvfb
 pytype

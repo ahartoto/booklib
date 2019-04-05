@@ -1,20 +1,31 @@
 # Filename: .travis.yml
 
+sudo: required
+dist: xenial
+
 language: python
 cache: pip
-# https://github.com/travis-ci/travis-ci/issues/9815
-# Enable 3.7 without globally enabling sudo and dist: xenial for other build jobs
-matrix:
-  include:
-      - python: 3.7
-        dist: xenial
-        sudo: true
+
+python:
+- '3.7'
+
 install:
 - pip install --upgrade -r requirements.txt
 - pip install --upgrade -r requirements-dev.txt
+
+# Add xvfb service since we have tests that requires GUI
+# https://docs.travis-ci.com/user/gui-and-headless-browsers/#using-services-xvfb
+services:
+- xvfb
+
 script:
 #- pylint booklib
-- pip install -e . && python -m pytest tests
+- qmake -v
+- pip install -e . && pytest --ignore=tests/ui/window tests
 
 notifications:
-  slack: curious-minds-101:Wkf5gPKQyJalUZ99Oyql0Zav
+  slack:
+    rooms:
+      secure: Su/kx2T4NUiX3p5HdirVhsseYH3sBDiESXo36fCoySqHir+DMEadIFSwGneL9Pxg1OX6QpNnPrawWerc4Bo3uWIH5rqmZdX4hexVDTyG8Y3S2k7bODgRbrPzFIXdT3DequD17qr9veAj8wbfeEJOqvWwvMAMkPtyEvhsRI2RfOvC417lBKlqX/RH72LW1NgbvaM/hcQYDtHqhMdurPJXI7WXGirC1nmt4bPKYfDwewIK+2rH/VUHiXgLpLqZPD0crl3tv0JKvuKv45O2elD4f7j4oEpKp0+DBZLzPlcGHnDdObF2jv3r+vZLqD/SRoMeBwM6tl6qcay6Te2ZLuqGtdj1KmXw2fvo98yDEyUq0sSbBUlOyUBhtLn0qgbBvwpe2YslAuQPdKZABzCiiSv7uU5+TgSvSEq5Rrh5oTBYsfJzb0X9gZWhlZkDb0RhwvEKtQDWmK8j3shxPSSpYAznjvCnNzLywEycGgdU1bk8U9vsWoM/S13BOu+C26cHpTVK7Go4wL3DYrvy/Qx4J26wp1fBnWSbgE1PahkWvNKAj6Sup7hliJc4GukwumEUOuAdu2G0/mk5rKgIFUjswEufSRPzmJLv3xG6xMusJ93+lrddt+wS2d6b7nlnx6MtFV+qkWrtOm9uN8Rot8jW6XcBQdGvrjRluCBdJxA2xAFWnCU=
+    on_success: always
+    on_failure: change

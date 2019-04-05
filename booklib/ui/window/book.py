@@ -11,7 +11,7 @@ import PyQt5.QtWidgets as qtw
 from booklib.ui.config import LABELS
 
 # BookLib
-from booklib.models import BookCategoryEnum
+from booklib.models import BookCategoryEnum, ReadingLevelEnum
 
 
 class BookInfo:
@@ -47,6 +47,17 @@ class BookInfo:
         categories_layout.addWidget(self.categories_others_qt, 5, 0)
         self.categories_box_qt.setLayout(categories_layout)
 
+        self.reading_level_qt = qtw.QComboBox()
+        # Add empty string as default.
+        self.reading_level_qt.addItem('')
+        for level in ReadingLevelEnum:
+            self.reading_level_qt.addItem(level.name)
+        # self.reading_level_qt.activated[str].connect()
+
+        self.title_qt = qtw.QLineEdit()
+        self.author_qt = qtw.QLineEdit()
+        self.publisher_qt = qtw.QLineEdit()
+
 
 class BookWindow(qtw.QDialog):
     def __init__(self, admin_window, *args, **kwargs):
@@ -64,13 +75,21 @@ class BookWindow(qtw.QDialog):
 
         isbn_no = qtw.QLabel(labels['isbn_no_txt'])
         call_no = qtw.QLabel(labels['call_no_txt'])
+        title = qtw.QLabel(labels['title_txt'])
+        authors = qtw.QLabel(labels['authors_txt'])
+        publisher = qtw.QLabel(labels['publisher_txt'])
         categories = qtw.QLabel(labels['category_txt'])
+        reading_level = qtw.QLabel(labels['level_txt'])
 
         # Create forms.
         form_layout = qtw.QFormLayout()
         form_layout.addRow(isbn_no, self.book.isbn_no_qt)
         form_layout.addRow(call_no, self.book.call_no_qt)
+        form_layout.addRow(title, self.book.title_qt)
+        form_layout.addRow(authors, self.book.author_qt)
+        form_layout.addRow(publisher, self.book.publisher_qt)
         form_layout.addRow(categories, self.book.categories_box_qt)
+        form_layout.addRow(reading_level, self.book.reading_level_qt)
 
         # Add confirmation buttons at the bottom.
         button_box = qtw.QDialogButtonBox()
