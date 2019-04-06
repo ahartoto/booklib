@@ -25,7 +25,7 @@ from booklib import config
 
 
 # Constants / globals
-ENGINE = create_engine(config.DB_PATH)
+ENGINE = create_engine(config.SQLALCHEMY_DB_PATH)
 
 Base = declarative_base()
 
@@ -150,7 +150,7 @@ class User(IdMixin, DateMixin, Base):
 
     family_name = Column(String(256), nullable=False, index=True)
     first_name = Column(String(256), index=True)
-    dob = Column(Date)
+    dob = Column(Date, nullable=False)
     gov_id = Column(String(256))
     phone_number = Column(String(20), nullable=False)
     school_name = Column(String(256))

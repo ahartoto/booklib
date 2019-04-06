@@ -13,7 +13,8 @@ import typing
 AGE_REQUIRE_ID = 16
 
 # FIXME - change this path
-DB_PATH = 'sqlite:///test.db'
+DB_PATH = 'test.db'
+SQLALCHEMY_DB_PATH = 'sqlite:///{}'.format(DB_PATH)
 
 # Create a new type
 DateTimeType = typing.NewType('DateTime', datetime.datetime)

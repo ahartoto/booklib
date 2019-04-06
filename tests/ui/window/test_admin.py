@@ -32,3 +32,13 @@ def test_click_book(qtbot):
     qtbot.mouseClick(window.book_btn, qtc.Qt.LeftButton)
     assert window.book_window.isVisible()
     assert not window.isVisible()
+
+
+def test_enter_search_keyword(qtbot):
+    cfg = config.MenuConfig()
+    window = admin.AdminWindow(cfg)
+    qtbot.addWidget(window)
+
+    want = 'test'
+    qtbot.keyClicks(window.search_textbox, want)
+    assert str(window.search_textbox.text()) == want

@@ -35,6 +35,11 @@ class AdminWindow(qtw.QMainWindow):
         self.book_btn = None
         self.book_window = None
 
+        # Search area
+        self.search_textbox = None
+        self.search_btn = None
+        self.search_output_table = None
+
         self.init_ui()
 
     def init_ui(self):
@@ -69,17 +74,31 @@ class AdminWindow(qtw.QMainWindow):
         # grid.addWidget(book_btn, 2, 0)
         vbox_side_menu.addWidget(self.book_btn)
 
-        # Add search menu: text bar + button
-        hbox_search_menu = qtw.QHBoxLayout()
-        search_textbox = qtw.QLineEdit()
-        hbox_search_menu.addWidget(search_textbox)
+        # Add stretch
+        vbox_side_menu.addStretch(1)
 
-        search_btn = qtw.QPushButton(labels['search_btn'], self)
-        search_btn.clicked.connect(self.search_entry)
-        hbox_search_menu.addWidget(search_btn)
+        # Add search menu: text bar + button + table
+        # TODO - check QCompleter
+        hbox_search_menu = qtw.QHBoxLayout()
+        self.search_textbox = qtw.QLineEdit()
+        hbox_search_menu.addWidget(self.search_textbox)
+
+        self.search_btn = qtw.QPushButton(labels['search_btn'], self)
+        self.search_btn.clicked.connect(self.search_entry)
+        hbox_search_menu.addWidget(self.search_btn)
+
+        self.search_output_table = qtw.QTableWidget()
+        self.search_output_table.setRowCount(10)
+        self.search_output_table.setColumnCount(2)
+        self.search_output_table.horizontalHeader().setSectionResizeMode(
+            0, qtw.QHeaderView.Stretch)
+        self.search_output_table.horizontalHeader().hide()
+        self.search_output_table.verticalHeader().hide()
+        self.search_output_table.setShowGrid(False)
 
         vbox_info_menu = qtw.QVBoxLayout()
         vbox_info_menu.addLayout(hbox_search_menu)
+        vbox_info_menu.addWidget(self.search_output_table)
 
         grid.addLayout(vbox_side_menu, 1, 0)
         grid.addLayout(vbox_info_menu, 1, 1)
