@@ -8,7 +8,7 @@ Main UI Window.
 import typing
 
 # PyQt5
-import PyQt5.QtWidgets as qtw
+from PyQt5 import QtWidgets
 
 # BookLib
 from booklib import config
@@ -17,7 +17,7 @@ from booklib.ui.window.account import AccountWindow
 from booklib.ui.window.book import BookWindow
 
 
-class AdminWindow(qtw.QMainWindow):
+class AdminWindow(QtWidgets.QMainWindow):
     """
     Main admin window.
     """
@@ -46,10 +46,10 @@ class AdminWindow(qtw.QMainWindow):
         menu = self.menuBar()
         tools_menu = menu.addMenu('&Tools')
 
-        lang_menu = qtw.QMenu('Language', self)
-        lang_en_action = qtw.QAction('English', self)
+        lang_menu = QtWidgets.QMenu('Language', self)
+        lang_en_action = QtWidgets.QAction('English', self)
         lang_en_action.triggered.connect(self.set_lang_en)
-        lang_fr_action = qtw.QAction('français', self)
+        lang_fr_action = QtWidgets.QAction('français', self)
         lang_fr_action.triggered.connect(self.set_lang_fr)
         lang_menu.addAction(lang_en_action)
         lang_menu.addAction(lang_fr_action)
@@ -60,16 +60,16 @@ class AdminWindow(qtw.QMainWindow):
     def init_window_ui(self):
         labels = LABELS[self.cfg.language][self.label_root]
 
-        grid = qtw.QGridLayout()
-        vbox_side_menu = qtw.QVBoxLayout()
+        grid = QtWidgets.QGridLayout()
+        vbox_side_menu = QtWidgets.QVBoxLayout()
         # Add account button
-        self.account_btn = qtw.QPushButton(labels['account_btn'], self)
+        self.account_btn = QtWidgets.QPushButton(labels['account_btn'], self)
         self.account_btn.clicked.connect(self.show_account_window)
         # grid.addWidget(account_btn, 1, 0)
         vbox_side_menu.addWidget(self.account_btn)
 
         # Add book button
-        self.book_btn = qtw.QPushButton(labels['book_btn'], self)
+        self.book_btn = QtWidgets.QPushButton(labels['book_btn'], self)
         self.book_btn.clicked.connect(self.show_book_window)
         # grid.addWidget(book_btn, 2, 0)
         vbox_side_menu.addWidget(self.book_btn)
@@ -79,24 +79,24 @@ class AdminWindow(qtw.QMainWindow):
 
         # Add search menu: text bar + button + table
         # TODO - check QCompleter
-        hbox_search_menu = qtw.QHBoxLayout()
-        self.search_textbox = qtw.QLineEdit()
+        hbox_search_menu = QtWidgets.QHBoxLayout()
+        self.search_textbox = QtWidgets.QLineEdit()
         hbox_search_menu.addWidget(self.search_textbox)
 
-        self.search_btn = qtw.QPushButton(labels['search_btn'], self)
+        self.search_btn = QtWidgets.QPushButton(labels['search_btn'], self)
         self.search_btn.clicked.connect(self.search_entry)
         hbox_search_menu.addWidget(self.search_btn)
 
-        self.search_output_table = qtw.QTableWidget()
+        self.search_output_table = QtWidgets.QTableWidget()
         self.search_output_table.setRowCount(10)
         self.search_output_table.setColumnCount(2)
         self.search_output_table.horizontalHeader().setSectionResizeMode(
-            0, qtw.QHeaderView.Stretch)
+            0, QtWidgets.QHeaderView.Stretch)
         self.search_output_table.horizontalHeader().hide()
         self.search_output_table.verticalHeader().hide()
         self.search_output_table.setShowGrid(False)
 
-        vbox_info_menu = qtw.QVBoxLayout()
+        vbox_info_menu = QtWidgets.QVBoxLayout()
         vbox_info_menu.addLayout(hbox_search_menu)
         vbox_info_menu.addWidget(self.search_output_table)
 
@@ -104,7 +104,7 @@ class AdminWindow(qtw.QMainWindow):
         grid.addLayout(vbox_info_menu, 1, 1)
 
         # Central widget
-        central_widget = qtw.QWidget()
+        central_widget = QtWidgets.QWidget()
         central_widget.setLayout(grid)
         self.setCentralWidget(central_widget)
 
@@ -116,7 +116,7 @@ class AdminWindow(qtw.QMainWindow):
 
         # Move window to center
         qr = self.frameGeometry()
-        cp = qtw.QDesktopWidget().availableGeometry().center()
+        cp = QtWidgets.QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 

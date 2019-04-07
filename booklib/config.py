@@ -7,17 +7,34 @@ and across sessions.
 
 # Standard libraries
 import datetime
+import os
 import typing
 
 # Constants
 AGE_REQUIRE_ID = 16
 
-# FIXME - change this path
-DB_PATH = 'test.db'
-SQLALCHEMY_DB_PATH = 'sqlite:///{}'.format(DB_PATH)
-
 # Create a new type
 DateTimeType = typing.NewType('DateTime', datetime.datetime)
+
+
+def get_db_path() -> typing.Text:
+    """Retrieve the database path.
+
+    User can set the path as an environment variable ($BOOKLIB_DB_PATH).
+
+    Returns:
+        Path to where the database is.
+    """
+    return os.getenv('BOOKLIB_DB_PATH', 'booklib.db')
+
+
+def get_sqlalchemy_db_path() -> typing.Text:
+    """Retrieve the database path that is compatible with SQLAlchemy.
+
+    Returns:
+        Path used by SQLAlchemy to create the engine.
+    """
+    return 'sqlite:///{}'.format(get_db_path())
 
 
 class MenuConfig:

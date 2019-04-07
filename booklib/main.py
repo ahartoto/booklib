@@ -15,8 +15,9 @@ def main(argv: typing.Iterable[typing.Text] = None) -> None:
         argv = sys.argv[1:]
 
     # Create database if it doesn't exist yet
-    if not os.path.exists(config.DB_PATH):
-        database.init()
+    if not os.path.exists(config.get_db_path()):
+        session = database.Session()
+        database.init(session)
 
     # Get config
     cfg = config.MenuConfig()
