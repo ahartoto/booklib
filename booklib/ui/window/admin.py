@@ -12,6 +12,8 @@ from PyQt5 import QtWidgets
 
 # BookLib
 from booklib import config
+from booklib import database
+from booklib import models
 from booklib.ui.config import LABELS
 from booklib.ui.window.account import AccountWindow
 from booklib.ui.window.book import BookWindow
@@ -36,6 +38,7 @@ class AdminWindow(QtWidgets.QMainWindow):
         self.book_window = None
 
         # Search area
+        self.search_category_combo = None
         self.search_textbox = None
         self.search_btn = None
         self.search_output_table = None
@@ -80,6 +83,10 @@ class AdminWindow(QtWidgets.QMainWindow):
         # Add search menu: text bar + button + table
         # TODO - check QCompleter
         hbox_search_menu = QtWidgets.QHBoxLayout()
+        self.search_category_combo = QtWidgets.QComboBox()
+        self.search_category_combo.addItem('First Name')
+        self.search_category_combo.addItem('Family Name')
+        hbox_search_menu.addWidget(self.search_category_combo)
         self.search_textbox = QtWidgets.QLineEdit()
         hbox_search_menu.addWidget(self.search_textbox)
 
@@ -88,10 +95,10 @@ class AdminWindow(QtWidgets.QMainWindow):
         hbox_search_menu.addWidget(self.search_btn)
 
         self.search_output_table = QtWidgets.QTableWidget()
-        self.search_output_table.setRowCount(10)
-        self.search_output_table.setColumnCount(2)
-        self.search_output_table.horizontalHeader().setSectionResizeMode(
-            0, QtWidgets.QHeaderView.Stretch)
+        # self.search_output_table.setRowCount(10)
+        # self.search_output_table.setColumnCount(2)
+        # self.search_output_table.horizontalHeader().setSectionResizeMode(
+        #     1, QtWidgets.QHeaderView.Stretch)
         self.search_output_table.horizontalHeader().hide()
         self.search_output_table.verticalHeader().hide()
         self.search_output_table.setShowGrid(False)
@@ -112,7 +119,7 @@ class AdminWindow(QtWidgets.QMainWindow):
         self.setWindowTitle(labels['title'])
 
         # Set geometry
-        self.setGeometry(0, 0, 300, 100)
+        self.setGeometry(0, 0, 600, 450)
 
         # Move window to center
         qr = self.frameGeometry()
@@ -145,5 +152,42 @@ class AdminWindow(QtWidgets.QMainWindow):
         self.hide()
         self.book_window.show()
 
-    def search_entry(self):
-        pass
+    def search_entry(self) -> None:
+        # Clear the items from previous search.
+        self.search_output_table.setRowCount(0)
+
+        # Perform new search.
+        category = str(self.search_category_combo.currentText())
+        value = str(self.search_textbox.text())
+        session = database.Session()
+        if category == 'First Name':
+            users = session.value.query(models.User).filter_by(
+                first_name=value).all()
+
+            # Initialize table.
+            count = len(users) + 1
+            self.search_output_table.setRowCount(count)
+            self.search_output_table.setColumnCount(2)
+
+            if not users:
+                self.search_output_table.setColumnCount(1)
+                self.search_output_table.horizontalHeader().setSectionResizeMode(
+                    0, QtWidgets.QHeaderView.Stretch)
+                self.search_output_table.setItem(
+                    0, 0, QtWidgets.QTableWidgetItem(
+                        'no users found with first name: {}'.format(value)))
+                return
+
+            self.search_output_table.horizontalHeader().setSectionResizeMode(
+                1, QtWidgets.QHeaderView.Stretch,
+            )
+            for i, header in enumerate(['First Name', 'Family Name']):
+                self.search_output_table.setItem(
+                    0, i, QtWidgets.QTableWidgetItem(header),
+                )
+            for i, user in enumerate(users, start=1):
+                self.search_output_table.setItem(
+                    i, 0, QtWidgets.QTableWidgetItem(user.first_name))
+                self.search_output_table.setItem(
+                    i, 1, QtWidgets.QTableWidgetItem(user.family_name))
+

@@ -63,6 +63,15 @@ class AccountInfo:
             school_name=text_value(self.school_qt),
         )
 
+    def clear(self) -> None:
+        self.first_name_qt.setText('')
+        self.family_name_qt.setText('')
+        self.dob_qt.setDate(QtCore.QDate.currentDate())
+        self.gov_id_qt.setText('')
+        self.phone_no_qt.setText('')
+        self.school_qt.setText('')
+        self.level_qt.setText('')
+
     def validate(self) -> None:
         # Validate name
         if not self.first_name_qt.text():
@@ -162,7 +171,8 @@ class AccountWindow(QtWidgets.QDialog):
         self.admin_window.show()
 
     def clear_account_data(self) -> None:
-        pass
+        self.account.clear()
+        self.account.first_name_qt.setCursorPosition(0)
 
     def insert_account(self) -> None:
         try:
@@ -173,7 +183,7 @@ class AccountWindow(QtWidgets.QDialog):
             self.error_dialog.showMessage(str(e))
             return
 
-        with db.session() as session:
+        with db.Session() as session:
             session.add(self.account.data)
 
         self.clear_account_data()
