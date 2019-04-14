@@ -47,6 +47,7 @@ class AdminWindow(QtWidgets.QMainWindow):
 
     def init_ui(self):
         menu = self.menuBar()
+        # FIXME - menu in config file
         tools_menu = menu.addMenu('&Tools')
 
         lang_menu = QtWidgets.QMenu('Language', self)
@@ -68,13 +69,11 @@ class AdminWindow(QtWidgets.QMainWindow):
         # Add account button
         self.account_btn = QtWidgets.QPushButton(labels['account_btn'], self)
         self.account_btn.clicked.connect(self.show_account_window)
-        # grid.addWidget(account_btn, 1, 0)
         vbox_side_menu.addWidget(self.account_btn)
 
         # Add book button
         self.book_btn = QtWidgets.QPushButton(labels['book_btn'], self)
         self.book_btn.clicked.connect(self.show_book_window)
-        # grid.addWidget(book_btn, 2, 0)
         vbox_side_menu.addWidget(self.book_btn)
 
         # Add stretch
@@ -84,6 +83,7 @@ class AdminWindow(QtWidgets.QMainWindow):
         # TODO - check QCompleter
         hbox_search_menu = QtWidgets.QHBoxLayout()
         self.search_category_combo = QtWidgets.QComboBox()
+        # FIXME - categories in the config file
         self.search_category_combo.addItem('First Name')
         self.search_category_combo.addItem('Family Name')
         hbox_search_menu.addWidget(self.search_category_combo)
@@ -95,10 +95,6 @@ class AdminWindow(QtWidgets.QMainWindow):
         hbox_search_menu.addWidget(self.search_btn)
 
         self.search_output_table = QtWidgets.QTableWidget()
-        # self.search_output_table.setRowCount(10)
-        # self.search_output_table.setColumnCount(2)
-        # self.search_output_table.horizontalHeader().setSectionResizeMode(
-        #     1, QtWidgets.QHeaderView.Stretch)
         self.search_output_table.horizontalHeader().hide()
         self.search_output_table.verticalHeader().hide()
         self.search_output_table.setShowGrid(False)
@@ -173,6 +169,7 @@ class AdminWindow(QtWidgets.QMainWindow):
                 self.search_output_table.setColumnCount(1)
                 self.search_output_table.horizontalHeader().setSectionResizeMode(
                     0, QtWidgets.QHeaderView.Stretch)
+                # FIXME - error message to be in the config as well
                 self.search_output_table.setItem(
                     0, 0, QtWidgets.QTableWidgetItem(
                         'no users found with first name: {}'.format(value)))

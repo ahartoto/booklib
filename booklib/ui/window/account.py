@@ -14,7 +14,7 @@ from PyQt5 import QtWidgets
 
 # BookLib
 from booklib import config
-from booklib import database as db
+from booklib import database
 from booklib import errors
 from booklib.ui.config import LABELS
 
@@ -53,8 +53,8 @@ class AccountInfo:
         self.level_qt = QtWidgets.QLineEdit()
 
     @property
-    def data(self) -> db.models.User:
-        return db.models.User(
+    def data(self) -> database.models.User:
+        return database.models.User(
             first_name=str(self.first_name_qt.text()),
             family_name=str(self.family_name_qt.text()),
             dob=self.dob_qt.date().toPyDate(),
@@ -73,6 +73,7 @@ class AccountInfo:
         self.level_qt.setText('')
 
     def validate(self) -> None:
+        # FIXME - error messages to be specified in the config
         # Validate name
         if not self.first_name_qt.text():
             raise errors.InputDataError('First name cannot be empty')
@@ -183,7 +184,7 @@ class AccountWindow(QtWidgets.QDialog):
             self.error_dialog.showMessage(str(e))
             return
 
-        with db.Session() as session:
+        with database.Session() as session:
             session.add(self.account.data)
 
         self.clear_account_data()
