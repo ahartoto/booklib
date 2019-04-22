@@ -97,8 +97,8 @@ class BookInfo:
         )
 
     def clear(self) -> None:
-        self.isbn_no_qt.setText('')
-        self.call_no_qt.setText('')
+        self.isbn_no_qt.clear()
+        self.call_no_qt.clear()
         self.categories_children_qt.setChecked(False)
         self.categories_adult_qt.setChecked(False)
         self.categories_young_adult_qt.setChecked(False)
@@ -109,9 +109,9 @@ class BookInfo:
         self.categories_comic_qt.setChecked(False)
         self.categories_others_qt.setChecked(False)
         self.reading_level_qt.setCurrentIndex(0)
-        self.title_qt.setText('')
-        self.author_qt.setText('')
-        self.publisher_qt.setText('')
+        self.title_qt.clear()
+        self.author_qt.clear()
+        self.publisher_qt.clear()
 
     def validate(self) -> None:
         isbn_no_txt = self.isbn_no_qt.text()

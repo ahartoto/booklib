@@ -64,13 +64,13 @@ class AccountInfo:
         )
 
     def clear(self) -> None:
-        self.first_name_qt.setText('')
-        self.family_name_qt.setText('')
+        self.first_name_qt.clear()
+        self.family_name_qt.clear()
         self.dob_qt.setDate(QtCore.QDate.currentDate())
-        self.gov_id_qt.setText('')
-        self.phone_no_qt.setText('')
-        self.school_qt.setText('')
-        self.level_qt.setText('')
+        self.gov_id_qt.clear()
+        self.phone_no_qt.clear()
+        self.school_qt.clear()
+        self.level_qt.clear()
 
     def validate(self) -> None:
         # FIXME - error messages to be specified in the config
@@ -136,10 +136,13 @@ class AccountWindow(QtWidgets.QDialog):
         self.button_box = QtWidgets.QDialogButtonBox()
         self.button_box.addButton(labels['ok_btn'],
                                   QtWidgets.QDialogButtonBox.AcceptRole)
+        clear_btn = self.button_box.addButton(
+            labels['clear_btn'], QtWidgets.QDialogButtonBox.ResetRole)
         self.button_box.addButton(labels['cancel_btn'],
                                   QtWidgets.QDialogButtonBox.RejectRole)
         self.button_box.accepted.connect(self.insert_account)
         self.button_box.rejected.connect(self.show_admin_window)
+        clear_btn.clicked.connect(self.clear_account_data)
 
         form_group_box = QtWidgets.QGroupBox(labels['new_account_form'])
         form_group_box.setLayout(form_layout)
@@ -165,6 +168,7 @@ class AccountWindow(QtWidgets.QDialog):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
+        self.account.first_name_qt.setFocus()
         self.show()
 
     def show_admin_window(self) -> None:
@@ -173,7 +177,7 @@ class AccountWindow(QtWidgets.QDialog):
 
     def clear_account_data(self) -> None:
         self.account.clear()
-        self.account.first_name_qt.setCursorPosition(0)
+        self.account.first_name_qt.setFocus()
 
     def insert_account(self) -> None:
         try:

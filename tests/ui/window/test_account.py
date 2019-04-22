@@ -41,3 +41,35 @@ def test_account_no_first_name(qtbot):
     dialog.account.first_name_qt.setText('')
     qtbot.mouseClick(dialog.button_box.buttons()[0], QtCore.Qt.LeftButton)
     assert dialog.error_dialog.isVisible()
+
+
+def test_account_focus_on_first_name(qtbot):
+    os.environ['BOOKLIB_DB_PATH'] = ':memory:'
+    database.init(database.Session())
+
+    window = admin.AdminWindow(config.MenuConfig())
+    qtbot.addWidget(window)
+    qtbot.mouseClick(window.account_btn, QtCore.Qt.LeftButton)
+
+    dialog = window.account_window
+    assert dialog.isVisible()
+    assert dialog.account.first_name_qt.hasFocus()
+
+
+def test_account_clear_button(qtbot):
+    os.environ['BOOKLIB_DB_PATH'] = ':memory:'
+    database.init(database.Session())
+
+    window = admin.AdminWindow(config.MenuConfig())
+    qtbot.addWidget(window)
+    qtbot.mouseClick(window.account_btn, QtCore.Qt.LeftButton)
+
+    dialog = window.account_window
+
+    # Move focus to another line
+    dialog.account.family_name_qt.setFocus()
+    qtbot.waitUntil(lambda: dialog.account.family_name_qt.hasFocus())
+
+    qtbot.mouseClick(dialog.button_box.buttons()[2], QtCore.Qt.LeftButton)
+    assert dialog.isVisible()
+    assert dialog.account.first_name_qt.hasFocus()

@@ -1,4 +1,3 @@
-
 LABELS = {
     'en': {
         'AdminWindow': {
@@ -18,6 +17,7 @@ LABELS = {
             'school_txt': 'School Name',
             'class_level_txt': 'Class/Level',
             'ok_btn': 'OK',
+            'clear_btn': 'Clear',
             'cancel_btn': 'Cancel',
         },
         'BookWindow': {
@@ -75,6 +75,7 @@ LABELS = {
             'school_txt': 'School Name',
             'class_level_txt': 'Class/Level',
             'ok_btn': 'OK',
+            'clear_btn': 'Clear',
             'cancel_btn': 'Cancel',
         },
         'BookWindow': {
@@ -115,3 +116,4 @@ LABELS = {
         },
     },
 }
+
