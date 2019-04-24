@@ -9,6 +9,12 @@ cache: pip
 python:
 - '3.7'
 
+before_install:
+- sudo add-apt-repository --yes ppa:beineri/opt-qt-5.12.2-xenial
+- sudo apt-get update
+- sudo apt-get install -y qt512-meta-minimal
+- source /opt/qt512/bin/qt512-env.sh
+
 install:
 - pip install --upgrade -r requirements.txt
 - pip install --upgrade -r requirements-dev.txt
@@ -21,7 +27,7 @@ services:
 script:
 #- pylint booklib
 - qmake -v
-- pip install -e . && pytest --ignore=tests/ui/window tests
+- pip install -e . && pytest tests
 
 notifications:
   slack:
