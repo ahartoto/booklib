@@ -19,6 +19,13 @@ LABELS = {
             'ok_btn': 'OK',
             'clear_btn': 'Clear',
             'cancel_btn': 'Cancel',
+            'errors': {
+                'no_first_name': 'First name cannot be empty',
+                'no_last_name': 'Family name cannot be empty',
+                'no_phone_number': 'Phone number cannot be empty',
+                'no_gov_id': 'Age is greater than or equal to {}, '
+                               'government ID is required',
+            },
         },
         'BookWindow': {
             'title': 'Book',
@@ -77,6 +84,13 @@ LABELS = {
             'ok_btn': 'OK',
             'clear_btn': 'Clear',
             'cancel_btn': 'Cancel',
+            'errors': {
+                'no_first_name': 'First name cannot be empty',
+                'no_last_name': 'Family name cannot be empty',
+                'no_phone_number': 'Phone number cannot be empty',
+                'no_gov_id': 'Age is greater than or equal to {}, '
+                               'government ID is required',
+            },
         },
         'BookWindow': {
             'title': 'Book',

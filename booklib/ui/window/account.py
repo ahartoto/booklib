@@ -31,7 +31,9 @@ class AccountInfo:
     The information is stored in the Qt widget.
     """
 
-    def __init__(self):
+    def __init__(self, labels: typing.Mapping[typing.Text, typing.Any]):
+        self.labels = labels
+
         self.first_name_qt = QtWidgets.QLineEdit()
         self.first_name_qt.setPlaceholderText('e.g. John')
 
@@ -73,16 +75,16 @@ class AccountInfo:
         self.level_qt.clear()
 
     def validate(self) -> None:
-        # FIXME - error messages to be specified in the config
         # Validate name
         if not self.first_name_qt.text():
-            raise errors.InputDataError('First name cannot be empty')
+            raise errors.InputDataError(self.labels['errors']['no_first_name'])
         if not self.family_name_qt.text():
-            raise errors.InputDataError('Family name cannot be empty')
+            raise errors.InputDataError(self.labels['errors']['no_last_name'])
 
         # Validate phone number
         if not self.phone_no_qt.text():
-            raise errors.InputDataError('Phone number cannot be empty')
+            msg = self.labels['errors']['no_phone_number']
+            raise errors.InputDataError(msg)
 
         dob = self.dob_qt.date().toPyDate()
         today = datetime.date.today()
@@ -90,9 +92,8 @@ class AccountInfo:
                                                                    dob.day))
         if age >= config.AGE_REQUIRE_ID:
             if not self.gov_id_qt.text():
-                raise errors.InputDataError(
-                    'Age is greater than or equal to {}, government ID is '
-                    'required'.format(config.AGE_REQUIRE_ID))
+                msg = self.labels['errors']['no_gov_id']
+                raise errors.InputDataError(msg.format(config.AGE_REQUIRE_ID))
         else:
             # TODO - add check of guardian
             pass
@@ -104,7 +105,7 @@ class AccountWindow(QtWidgets.QDialog):
         self.label_root = __class__.__name__
         self.admin_window = admin_window
 
-        self.account = AccountInfo()
+        self.account = None
         self.button_box = None
         self.error_dialog = None
 
@@ -113,6 +114,8 @@ class AccountWindow(QtWidgets.QDialog):
     def init_ui(self) -> None:
         lang = self.admin_window.cfg.language
         labels = LABELS[lang][self.label_root]
+
+        self.account = AccountInfo(labels)
 
         first_name = QtWidgets.QLabel(labels['first_name_txt'])
         family_name = QtWidgets.QLabel(labels['family_name_txt'])
