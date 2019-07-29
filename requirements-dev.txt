@@ -1,6 +1,6 @@
 coverage
 pylint
-pyqt5-stubs
+pyqt5-stubs==5.12.1.0
 pytest
 pytest-qt
 pytest-xvfb
